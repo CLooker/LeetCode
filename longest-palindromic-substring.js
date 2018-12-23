@@ -10,9 +10,9 @@ const isPalindrome = str => {
 const longestPalindrome = str => {
   if (!str || isPalindrome(str)) return str;
 
-  let [longestStr] = str;
-  const updateLongestStr = localStr => {
-    if (localStr.length > longestStr.length) longestStr = localStr;
+  let [longest] = str;
+  const updateLongest = localStr => {
+    if (localStr.length > longest.length) longest = localStr;
   };
 
   for (let i = 0; i < str.length; i++) {
@@ -20,14 +20,17 @@ const longestPalindrome = str => {
     let isAllSameLetter = true;
     for (let j = i + 1; j < str.length; j++) {
       localStr += str[j];
-      if (isAllSameLetter && str[j] !== str[j - 1]) isAllSameLetter = false;
-      if (isAllSameLetter) {
-        updateLongestStr(localStr);
-        continue;
+      switch (true) {
+        case !isAllSameLetter:
+          if (isPalindrome(localStr)) updateLongest(localStr);
+          continue;
+        case str[j] !== str[j - 1]:
+          isAllSameLetter = false;
+          continue;
+        default:
+          updateLongest(localStr);
       }
-      if (!isPalindrome(localStr)) continue;
-      updateLongestStr(localStr);
     }
   }
-  return longestStr;
+  return longest;
 };
