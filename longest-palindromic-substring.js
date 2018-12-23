@@ -20,7 +20,7 @@ const longestPalindrome = str => {
     let isAllSameLetter = true;
     for (let j = i + 1; j < str.length; j++) {
       localStr += str[j];
-      if (str[j] !== str[j - 1]) isAllSameLetter = false;
+      if (isAllSameLetter && str[j] !== str[j - 1]) isAllSameLetter = false;
       if (isAllSameLetter) {
         updateLongestStr(localStr);
         continue;
