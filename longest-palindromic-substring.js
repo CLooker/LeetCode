@@ -18,8 +18,8 @@ const longestPalindrome = str => {
     if (localStr.length > longest.length) longest = localStr;
   };
 
-  for (let i = 0; i < str.length; i++) {
-    let localStr = str[i];
+  [...str].forEach((letter, i) => {
+    let localStr = letter;
     let isAllSameLetter = true;
     for (let j = i + 1; j < str.length; j++) {
       localStr += str[j];
@@ -34,6 +34,7 @@ const longestPalindrome = str => {
           updateLongest(localStr);
       }
     }
-  }
+  });
+
   return longest;
 };
