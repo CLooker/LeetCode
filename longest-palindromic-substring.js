@@ -1,9 +1,12 @@
 // https://leetcode.com/problems/longest-palindromic-substring/
 
 const isPalindrome = str => {
-  for (let i = 0, j = str.length - 1; i < str.length, j >= 0; i++, j--) {
+  const { length } = str;
+  const borderIdx = Math.floor(length / 2);
+  const areIdxesValid = (i, j) =>
+    i < borderIdx && (j > borderIdx || (length % 2 === 0 && j === borderIdx));
+  for (let i = 0, j = length - 1; areIdxesValid(i, j); i++, j--)
     if (str[i] !== str[j]) return false;
-  }
   return true;
 };
 
