@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/median-of-two-sorted-arrays/
 
-const insertionSort = items => {
+const insertionSort = sortedItemsArrs => {
   const insert = (sortedItems, itemToInsert) => {
     if (!sortedItems.length) return sortedItems.concat(itemToInsert);
     for (const [i, sortedItem] of sortedItems.entries()) {
@@ -14,34 +14,37 @@ const insertionSort = items => {
     return sortedItems.concat(itemToInsert);
   };
 
-  return items.reduce((sortedItems, item) => insert(sortedItems, item), []);
+  const [smallestSortedItems, rest] = (() => {
+    const indexOfShortestArr = sortedItemsArrs.reduce(
+      (indexOfShortestArr, sortedItems, i) =>
+        sortedItems.length < sortedItemsArrs[indexOfShortestArr]
+          ? i
+          : indexOfShortestArr,
+      0
+    );
+
+    return [
+      sortedItemsArrs[indexOfShortestArr],
+      ...sortedItemsArrs.filter((_, i) => i !== indexOfShortestArr)
+    ];
+  })();
+
+  return smallestSortedItems.reduce(
+    (sortedItems, item) => insert(sortedItems, item),
+    rest
+  );
 };
 
-const flat = items =>
-  items.reduce(
-    (flattened, item) =>
-      Array.isArray(item)
-        ? [...flattened, ...flat(item)]
-        : [...flattened, item],
-    []
-  );
-
 const findMedianSortedArrays = (...sortedNumsArrs) => {
-  const sortedNums = insertionSort(flat(sortedNumsArrs));
+  const sortedNums = insertionSort(sortedNumsArrs);
   const { length } = sortedNums;
   const midpoint = length / 2;
 
-  let median;
-  if (length % 2 === 0) {
-    const medianIndices = [midpoint - 1, midpoint];
-    const medianSum = medianIndices.reduce(
-      (medianSum, medianIndex) => medianSum + sortedNums[medianIndex],
-      0
-    );
-    median = medianSum / 2;
-  } else {
-    const medianIndex = Math.floor(midpoint);
-    median = sortedNums[medianIndex];
-  }
-  return median;
+  const medianIndices =
+    length % 2 === 0 ? [midpoint, midpoint - 1] : [Math.floor(midpoint)];
+  const medianSum = medianIndices.reduce(
+    (medianSum, medianIndex) => medianSum + sortedNums[medianIndex],
+    0
+  );
+  return medianSum / medianIndices.length;
 };
