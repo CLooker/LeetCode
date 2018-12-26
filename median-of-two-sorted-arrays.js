@@ -14,7 +14,7 @@ const insertionSort = sortedItemsArrs => {
     return sortedItems.concat(itemToInsert);
   };
 
-  const [smallestSortedItems, rest] = (() => {
+  const [shortestSortedItems, rest] = (() => {
     const indexOfShortestArr = sortedItemsArrs.reduce(
       (indexOfShortestArr, sortedItems, i) =>
         sortedItems.length < sortedItemsArrs[indexOfShortestArr]
@@ -29,7 +29,7 @@ const insertionSort = sortedItemsArrs => {
     ];
   })();
 
-  return smallestSortedItems.reduce(
+  return shortestSortedItems.reduce(
     (sortedItems, item) => insert(sortedItems, item),
     rest
   );
