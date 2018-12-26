@@ -7,17 +7,13 @@ const myAtoi = ([...chars]) => {
 
   let result = [];
   for (char of chars) {
-    if (result.length) {
-      if (!isInt(char)) break;
-      result.push(char);
-    } else {
+    if (result.length && !isInt(char)) break;
+    if (!result.length) {
       if (isSpace(char)) continue;
-      if (!isSign(char) && !isInt(char)) return (result = 0);
-      result.push(char);
+      if (!isSign(char) && !isInt(char)) return 0;
     }
+    result.push(char);
   }
-
-  if (!result) return result;
 
   result = +result.join('');
 
