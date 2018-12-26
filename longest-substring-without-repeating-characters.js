@@ -3,10 +3,11 @@
 const isUniqueItem = (items, targetItem) =>
   items.every(item => item !== targetItem);
 
-const lengthOfLongestSubstring = str => {
-  if (str.length < 2) return str.length;
+const lengthOfLongestSubstring = ([...letters]) => {
+  const { length } = letters;
+  if (length < 2) return length;
 
-  return [...str].reduce((longest, letter, i, letters) => {
+  return letters.reduce((longest, letter, i) => {
     const uniqueLetters = [letter];
     for (const laterLetter of letters.slice(i + 1)) {
       if (!isUniqueItem(uniqueLetters, laterLetter)) break;
