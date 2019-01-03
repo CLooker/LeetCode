@@ -7,17 +7,14 @@ const findMinDifference = times => {
 
   const minutesArr = times.map(time => {
     const [hours, remainderMinutes] = time.split(':').map(str => +str);
-
-    let minutes = 0;
-    minutes += hours * 60;
-    minutes += remainderMinutes;
+    const minutes = hours * 60 + remainderMinutes;
     return minutes ? minutes : midnight;
   });
 
-  let minimumDifference = undefined;
+  let minimumDifference = null;
 
   for (let i = 0; i < minutesArr.length; i++) {
-    if (minimumDifference === 0) return minimumDifference;
+    if (minimumDifference === 0) break;
 
     const min1 = minutesArr[i];
 
@@ -36,7 +33,7 @@ const findMinDifference = times => {
         return Math.abs(min1 - min2);
       })();
 
-      if (minimumDifference === undefined || difference < minimumDifference)
+      if (minimumDifference === null || difference < minimumDifference)
         minimumDifference = difference;
     }
   }
