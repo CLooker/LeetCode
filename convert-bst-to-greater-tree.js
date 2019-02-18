@@ -6,16 +6,16 @@ const convertBST = root => {
   class _convertBST {
     constructor(root) {
       this.sum = 0;
-      return this.convertBST(root);
+      return this.main(root);
     }
 
-    convertBST(root) {
+    main(root) {
       if (!root) return;
 
-      this.convertBST(root.right);
+      this.main(root.right);
       this.sum += root.val;
       root.val = this.sum;
-      this.convertBST(root.left);
+      this.main(root.left);
       return root;
     }
   }
