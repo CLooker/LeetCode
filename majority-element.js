@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/majority-element/
+
 const majorityElement = nums => {
   const getIsMajorityElement = freq => freq > nums.length / 2;
 
